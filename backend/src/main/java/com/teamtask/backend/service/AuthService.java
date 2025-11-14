@@ -3,9 +3,11 @@ package com.teamtask.backend.service;
 import java.time.Instant;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import com.teamtask.backend.dto.LoginUserDto;
@@ -13,6 +15,7 @@ import com.teamtask.backend.dto.RegisterUserDto;
 import com.teamtask.backend.entity.User;
 import com.teamtask.backend.exception.EmailAlreadyExistsException;
 import com.teamtask.backend.exception.InvalidCredentialsException;
+import com.teamtask.backend.exception.UserNotFoundException;
 import com.teamtask.backend.repository.UserRepository;
 
 @Service
@@ -45,6 +48,13 @@ public class AuthService {
 			throw new InvalidCredentialsException();
 		}
 		return createToken(user);
+	}
+	
+	public User getUserFromToken(JwtAuthenticationToken auth) {
+		Jwt jwt = auth.getToken();
+		int userId = Integer.valueOf(jwt.getSubject());
+		User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+		return user;
 	}
 	
 	private String createToken(User user) {

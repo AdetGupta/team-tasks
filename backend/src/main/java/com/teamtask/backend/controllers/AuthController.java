@@ -41,11 +41,11 @@ public class AuthController {
 	}
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<Map<String, String>> authenticate(@RequestBody LoginUserDto request){
+	public ResponseEntity<String> authenticate(@RequestBody LoginUserDto request){
 		String token= authService.authenticateUser(request);
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(Map.of("token", token));
+				.body(token);
 	}
 	
 }

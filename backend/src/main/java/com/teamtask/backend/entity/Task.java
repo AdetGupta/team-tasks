@@ -3,6 +3,8 @@ package com.teamtask.backend.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.teamtask.backend.dto.RequestTaskDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -26,23 +28,23 @@ public class Task {
 	private User assignedTo;
 	private LocalDateTime dueAt;
 	private Boolean isCompleted;
-	private int createdBy;
 	private LocalDateTime createdOn;
 	
 	public Task() {}
-	public Task(String title, String description, String priority, User assignedTo, LocalDateTime dueAt,
-			int createdBy) {
+	public Task(String title, String description, String priority, User assignedTo, LocalDateTime dueAt) {
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
 		this.assignedTo = assignedTo;
 		this.dueAt = dueAt;
 		this.isCompleted = false;
-		this.createdBy = createdBy;
 		this.createdOn = LocalDateTime.now();
 	}
 
-
+	public static Task fromRequest(RequestTaskDto request, User assignedTo) {
+		return new Task(request.getTitle(), request.getDescription(), request.getPriority(), assignedTo, request.getDueAt());
+	}
+	
 	public UUID getTaskId() {
 		return taskId;
 	}
@@ -84,12 +86,6 @@ public class Task {
 	}
 	public void setIsCompleted(Boolean isCompleted) {
 		this.isCompleted = isCompleted;
-	}
-	public int getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(int createdBy) {
-		this.createdBy = createdBy;
 	}
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

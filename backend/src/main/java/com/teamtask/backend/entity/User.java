@@ -45,6 +45,15 @@ public class User {
 		
 	}
 	
+	public void addTask(Task task) {
+		try {
+			task.setAssignedTo(this);
+			tasks.add(task);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -80,6 +89,11 @@ public class User {
 	}
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
+	}
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", createdOn=" + createdOn + ", tasks=" + tasks + "]";
 	}
 	
 	
