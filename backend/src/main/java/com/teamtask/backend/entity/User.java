@@ -1,13 +1,17 @@
 package com.teamtask.backend.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.teamtask.backend.dto.RegisterUserDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,14 +19,21 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue
-	public int userId;
+	private int userId;
 	@Column(nullable = false)
-	public String name;
+	private String name;
 	@Column(nullable = false, unique = true)
-	public String email;
+	private String email;
 	@Column(nullable = false)
-	public String password;
-	public LocalDate createdOn;
+	private String password;
+	private LocalDate createdOn;
+	@OneToMany(
+            mappedBy = "assignedTo",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+	private List<Task> tasks;
+	
 	
 	public User() {}
 	public User(RegisterUserDto request) {
@@ -30,6 +41,7 @@ public class User {
 		this.email = request.email;
 		this.password = request.password;
 		this.createdOn = LocalDate.now();
+		this.setTasks(new ArrayList<Task>());
 		
 	}
 	
@@ -62,6 +74,12 @@ public class User {
 	}
 	public void setCreatedOn(LocalDate createdOn) {
 		this.createdOn = createdOn;
+	}
+	public List<Task> getTasks() {
+		return tasks;
+	}
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 	
 	
