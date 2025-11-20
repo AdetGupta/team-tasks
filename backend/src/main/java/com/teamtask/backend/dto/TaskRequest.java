@@ -3,14 +3,14 @@ package com.teamtask.backend.dto;
 import java.time.LocalDateTime;
 
 
-public class RequestTaskDto {
+public class TaskRequest {
 	private String title; 
 	private String description;
 	private String priority;
 	private int assignedTo;
 	private LocalDateTime dueAt;
 	
-	public RequestTaskDto() {}
+	public TaskRequest() {}
 	
 	public String getTitle() {
 		return title;

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.teamtask.backend.dto.RegisterUserDto;
+import com.teamtask.backend.dto.RegisterUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class User {
 	@Id
 	@GeneratedValue
-	private int userId;
+	private Integer userId;
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false, unique = true)
@@ -36,7 +36,7 @@ public class User {
 	
 	
 	public User() {}
-	public User(RegisterUserDto request) {
+	public User(RegisterUser request) {
 		this.name = request.name;
 		this.email = request.email;
 		this.password = request.password;

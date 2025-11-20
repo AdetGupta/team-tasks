@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamtask.backend.dto.LoginUserDto;
-import com.teamtask.backend.dto.RegisterUserDto;
+import com.teamtask.backend.dto.LoginUser;
+import com.teamtask.backend.dto.RegisterUser;
 import com.teamtask.backend.service.AuthService;
 
 @RestController
@@ -33,7 +33,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("register")
-	public ResponseEntity<Map<String, String>> create(@RequestBody RegisterUserDto request){
+	public ResponseEntity<Map<String, String>> create(@RequestBody RegisterUser request){
 		String token = authService.createUser(request);
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
@@ -41,7 +41,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<String> authenticate(@RequestBody LoginUserDto request){
+	public ResponseEntity<String> authenticate(@RequestBody LoginUser request){
 		String token= authService.authenticateUser(request);
 		return ResponseEntity
 				.status(HttpStatus.OK)

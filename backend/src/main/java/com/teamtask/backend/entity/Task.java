@@ -3,7 +3,7 @@ package com.teamtask.backend.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.teamtask.backend.dto.RequestTaskDto;
+import com.teamtask.backend.dto.TaskRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,7 +24,7 @@ public class Task {
 	private String description;
 	private String priority;
 	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "assigned_to", nullable = false)
 	private User assignedTo;
 	private LocalDateTime dueAt;
 	private Boolean isCompleted;
@@ -41,7 +41,7 @@ public class Task {
 		this.createdOn = LocalDateTime.now();
 	}
 
-	public static Task fromRequest(RequestTaskDto request, User assignedTo) {
+	public static Task fromRequest(TaskRequest request, User assignedTo) {
 		return new Task(request.getTitle(), request.getDescription(), request.getPriority(), assignedTo, request.getDueAt());
 	}
 	

@@ -1,10 +1,19 @@
 package com.teamtask.backend.dto;
 
-public class LoginUserDto {
+public class RegisterUser {
+	public String name;
 	public String email;
 	public String password;
 	
-	public LoginUserDto() {}
+	public RegisterUser() {}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public String getEmail() {
 		return email;

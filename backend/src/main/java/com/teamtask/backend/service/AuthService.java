@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Service;
 
-import com.teamtask.backend.dto.LoginUserDto;
-import com.teamtask.backend.dto.RegisterUserDto;
+import com.teamtask.backend.dto.LoginUser;
+import com.teamtask.backend.dto.RegisterUser;
 import com.teamtask.backend.entity.User;
 import com.teamtask.backend.exception.EmailAlreadyExistsException;
 import com.teamtask.backend.exception.InvalidCredentialsException;
@@ -30,7 +30,7 @@ public class AuthService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
-	public String createUser(RegisterUserDto request) {
+	public String createUser(RegisterUser request) {
 		User newUser = new User(request);
 		newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 		try{
@@ -42,7 +42,7 @@ public class AuthService {
 		
 	}
 
-	public String authenticateUser(LoginUserDto request) {
+	public String authenticateUser(LoginUser request) {
 		User user = userRepository.findByEmail(request.getEmail()).orElseThrow(InvalidCredentialsException::new);
 		if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
 			throw new InvalidCredentialsException();
