@@ -44,7 +44,13 @@ public class Task {
 	public static Task fromRequest(TaskRequest request, User assignedTo) {
 		return new Task(request.getTitle(), request.getDescription(), request.getPriority(), assignedTo, request.getDueAt());
 	}
-	
+	public void updateFromRequest(TaskRequest request) {
+		this.title = request.getTitle();
+		this.description = request.getDescription();
+		this.priority = request.getPriority();
+		this.dueAt = request.getDueAt();
+		
+	}
 	public UUID getTaskId() {
 		return taskId;
 	}
@@ -92,8 +98,5 @@ public class Task {
 	}
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
-	}
-	
-	
-	
+	}	
 }

@@ -61,4 +61,22 @@ public class TaskService {
 		return TaskResponse.fromTaskEntity(task);
 	}
 
+	public TaskResponse updateTask(int userId, UUID taskId, TaskRequest request) {
+		Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+		if(task.getAssignedTo().getUserId() != userId) {
+			throw new NotAuthorizedException();
+		}
+		task.updateFromRequest(request);
+		taskRepository.save(task);
+		return TaskResponse.fromTaskEntity(task);
+	}
+
+	public void deleteTask(int userId, UUID taskId) {
+		Task task = taskRepository.findById(taskId).orElseThrow(TaskNotFoundException::new);
+		if(task.getAssignedTo().getUserId() != userId) {
+			throw new NotAuthorizedException();
+		}
+		taskRepository.delete(task);
+	}
+
 }
